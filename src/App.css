@@ -1,0 +1,21 @@
+@media print {
+  body {
+    margin: 0;
+  }
+}
+
+@page {
+  margin: 0;
+}
+
+@page: right {
+}
+
+.printable {
+  display: flex;
+  page-break-before: always;
+}
+
+.printable.right {
+  justify-content: flex-end;
+}
