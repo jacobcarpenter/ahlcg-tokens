@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import { Random } from "random";
 // import { xor128 } from "seedrandom";
 import { RandomStar } from "./RandomStar";
@@ -18,22 +20,27 @@ const columns = 4;
 const spacing = 28;
 
 export function App() {
-	const radius = 12;
+	const frontRef = useRef();
+
+	function handleSave() {
+		navigator.clipboard.writeText(frontRef.current?.outerHTML);
+	}
+
+	const radius = 11;
 
 	return (
 		<>
-			<div>
-				<svg style={{ width: "200mm" }} viewBox="0 0 80 80">
-					<g transform="translate(30, 30)">
-						<Arrow />
-					</g>
-				</svg>
+			<div className="non-printable">
+				<button onClick={handleSave}>save SVG</button>
 			</div>
-
 			<div className="printable">
-				<svg style={{ width: "200mm" }} viewBox="0 0 200 200">
-					<g transform="translate(130, 30)">
-						<Arrow />
+				<svg ref={frontRef} style={{ width: "200mm" }} viewBox="0 0 200 200">
+					<g transform={`translate(130, ${padding / 2})`}>
+						{Array.from({ length: 6 }).map((_, i) => (
+							<g key={i} transform={`translate(0, ${padding * i})`}>
+								<Arrow />
+							</g>
+						))}
 					</g>
 
 					{Array.from({ length: tokenCount }).map((_, i) => (
@@ -63,14 +70,7 @@ export function App() {
 								Math.trunc(i / columns) * spacing + padding
 							})`}
 						>
-							<circle
-								cx="0"
-								cy="0"
-								r={radius}
-								fill="transparent"
-								stroke="red"
-								strokeWidth={"0.1"}
-							/>
+							<circle cx="0" cy="0" r={radius} fill="none" stroke="red" strokeWidth={"0.1"} />
 							<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
 							<circle cx="0" cy="0" r={radius * 0.8 - 2} fill="white" stroke="none" />
 						</g>
