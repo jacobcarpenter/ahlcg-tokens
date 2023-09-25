@@ -1,6 +1,10 @@
+import { useId } from "react";
+
 import { d } from "./util";
 
-export function Arrow({ length = 60, width = 10 }) {
+export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
+	const id = useId();
+
 	const tokenPointAngle = 28;
 	const tokenPointRadius = 1;
 
@@ -9,6 +13,9 @@ export function Arrow({ length = 60, width = 10 }) {
 	const headBackAngle = 44;
 	const headLength = 7;
 	const headOverlap = 3;
+	const arrowBarWidth = 4;
+	const arrowBarCurveFactorY = 0.5;
+	const arrowBarCurveFactorX = 0.25;
 
 	const arrowHeadY = Math.sin((headAngle * Math.PI) / 180) * headLength;
 	const arrowHeadX = Math.cos((headAngle * Math.PI) / 180) * headLength;
@@ -23,6 +30,8 @@ export function Arrow({ length = 60, width = 10 }) {
 
 	const xOffsetToTangent = distanceAlongOutsideToTangent * cos(tokenPointAngle);
 	const yOffsetToTangent = distanceAlongOutsideToTangent * sin(tokenPointAngle);
+
+	const arrowBarInset = firstOuterPointX - 0;
 
 	return (
 		<g transform={`translate(0,${width / 2})`}>
@@ -44,40 +53,62 @@ export function Arrow({ length = 60, width = 10 }) {
 				`}
 			/>
 
-			<line
-				x1={headInset + headOverlap + headLength}
-				y1={0}
-				x2={length - headInset - headOverlap - headLength}
-				y2={0}
-				stroke="#000"
-				strokeWidth="1"
-			/>
+			<g>
+				<defs>
+					<clipPath id={`${id}-clip-right`}>
+						<rect
+							x={0}
+							y={-width / 2}
+							width={length - firstOuterPointX}
+							height={width}
+							fill="black"
+						/>
+					</clipPath>
 
-			<g transform={`translate(${length - headInset}, 0) scale(-1 1)`}>
+					<clipPath id={`${id}-clip-left`}>
+						<rect
+							x={firstOuterPointX}
+							y={-width / 2}
+							width={length - firstOuterPointX}
+							height={width}
+							fill="black"
+							clipPath={doubleArrow ? `url(#${id}-clip-right)` : undefined}
+						/>
+					</clipPath>
+				</defs>
+
 				<path
 					d={d`
-						M${[0, 0]}
-						Q${[arrowHeadX * 0.6, -arrowHeadY * 0.2]} ${[arrowHeadX, -arrowHeadY]}
-						L${[fullHeadLength, 0]}
-						 ${[arrowHeadX, arrowHeadY]}
-						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
-						Z`}
+					M${[arrowBarInset, -arrowBarWidth / 2]}
+					C${[
+						[
+							arrowBarInset + (length - 2 * arrowBarInset) * arrowBarCurveFactorX,
+							-arrowBarWidth / 2 + arrowBarWidth * arrowBarCurveFactorY,
+						],
+						[
+							length - arrowBarInset - (length - 2 * arrowBarInset) * arrowBarCurveFactorX,
+							-arrowBarWidth / 2 + arrowBarWidth * arrowBarCurveFactorY,
+						],
+						[length - arrowBarInset, -arrowBarWidth / 2],
+					]}
+					A${tokenPointRadius} ${tokenPointRadius} 0 0 1 ${[length - arrowBarInset, arrowBarWidth / 2]}
+					C${[
+						[
+							length - arrowBarInset - (length - 2 * arrowBarInset) * arrowBarCurveFactorX,
+							arrowBarWidth / 2 - arrowBarWidth * arrowBarCurveFactorY,
+						],
+						[
+							arrowBarInset + (length - 2 * arrowBarInset) * arrowBarCurveFactorX,
+							arrowBarWidth / 2 - arrowBarWidth * arrowBarCurveFactorY,
+						],
+						[arrowBarInset, arrowBarWidth / 2],
+					]}
+					A${tokenPointRadius} ${tokenPointRadius} 0 0 1 ${[arrowBarInset, -arrowBarWidth / 2]}
+					Z`}
 					stroke="#000"
 					strokeWidth="0.1"
-					fill="#fff"
-					transform={`translate(${headOverlap}, 0)`}
-				/>
-				<path
-					d={d`
-						M${[0, 0]}
-						Q${[arrowHeadX * 0.6, -arrowHeadY * 0.2]} ${[arrowHeadX, -arrowHeadY]}
-						L${[fullHeadLength, 0]}
-						 ${[arrowHeadX, arrowHeadY]}
-						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
-						Z`}
-					stroke="#000"
-					strokeWidth="0.1"
-					fill="#fff"
+					fill="none"
+					clipPath={`url(#${id}-clip-left)`}
 				/>
 			</g>
 
@@ -108,6 +139,36 @@ export function Arrow({ length = 60, width = 10 }) {
 					fill="#fff"
 				/>
 			</g>
+
+			{doubleArrow ? (
+				<g transform={`translate(${length - headInset}, 0) scale(-1 1)`}>
+					<path
+						d={d`
+						M${[0, 0]}
+						Q${[arrowHeadX * 0.6, -arrowHeadY * 0.2]} ${[arrowHeadX, -arrowHeadY]}
+						L${[fullHeadLength, 0]}
+						 ${[arrowHeadX, arrowHeadY]}
+						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
+						Z`}
+						stroke="#000"
+						strokeWidth="0.1"
+						fill="#fff"
+						transform={`translate(${headOverlap}, 0)`}
+					/>
+					<path
+						d={d`
+						M${[0, 0]}
+						Q${[arrowHeadX * 0.6, -arrowHeadY * 0.2]} ${[arrowHeadX, -arrowHeadY]}
+						L${[fullHeadLength, 0]}
+						 ${[arrowHeadX, arrowHeadY]}
+						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
+						Z`}
+						stroke="#000"
+						strokeWidth="0.1"
+						fill="#fff"
+					/>
+				</g>
+			) : null}
 		</g>
 	);
 }

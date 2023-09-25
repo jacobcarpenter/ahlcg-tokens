@@ -1,14 +1,20 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 
 import { Random } from "random";
-// import { xor128 } from "seedrandom";
+import seedrandom from "seedrandom";
 import { RandomStar } from "./RandomStar";
 import { Arrow } from "./Arrow";
 
 import "./App.css";
 
-const rng = new Random();
-// rng.use(xor128("ahlcg1"));
+function createRng(seed) {
+	const prng = seedrandom(seed); // TODO: replace underlying prng?
+	const rng = new Random();
+	rng.use(prng);
+	return rng;
+}
+
+const outerRng = createRng();
 
 const layers = [2, 3];
 const points = [8, 20];
@@ -20,45 +26,76 @@ const columns = 4;
 const spacing = 28;
 
 export function App() {
-	const frontRef = useRef();
+	// TODO: use reducer?
+	// TODO: pre-fill seed states as object with with value and locked flag
+	// ... only regen seeds explicitly in response to a button
+	// TODO: visual indication of locked?
+	const [seeds, setSeeds] = useState(() =>
+		Array.from({ length: tokenCount }, () => ({
+			seed: outerRng.next(),
+			locked: true,
+		}))
+	);
 
+	const frontRef = useRef();
 	function handleSave() {
 		navigator.clipboard.writeText(frontRef.current?.outerHTML);
+	}
+
+	function handleRegen() {
+		setSeeds((seeds) =>
+			seeds.map((x) => (x.locked ? x : { seed: outerRng.next(), locked: false }))
+		);
 	}
 
 	const radius = 11;
 
 	return (
 		<>
-			<div className="non-printable">
+			<div className="non-printable flex">
 				<button onClick={handleSave}>save SVG</button>
+				<button onClick={handleRegen}>regenerate</button>
 			</div>
 			<div className="printable">
 				<svg ref={frontRef} style={{ width: "200mm" }} viewBox="0 0 200 200">
 					<g transform={`translate(130, ${padding / 2})`}>
 						{Array.from({ length: 6 }).map((_, i) => (
 							<g key={i} transform={`translate(0, ${padding * i})`}>
-								<Arrow />
+								<Arrow doubleArrow={i < 3} />
 							</g>
 						))}
 					</g>
 
-					{Array.from({ length: tokenCount }).map((_, i) => (
-						<g
-							key={i}
-							transform={`translate(${(i % columns) * spacing + padding}, ${
-								Math.trunc(i / columns) * spacing + padding
-							})`}
-						>
-							<RandomStar
-								radius={radius}
-								radiusScale={radiusScale}
-								layers={layers}
-								points={points}
-								rng={rng}
-							/>
-						</g>
-					))}
+					{seeds.map(({ seed, locked }, i) => {
+						const rng = createRng(seed);
+
+						return (
+							<g
+								key={seed}
+								transform={`translate(${(i % columns) * spacing + padding}, ${
+									Math.trunc(i / columns) * spacing + padding
+								})`}
+							>
+								{!locked ? (
+									<line className="non-printable" x1={-12} y1={0} x2={12} y2={0} stroke="red" />
+								) : null}
+								<RandomStar
+									radius={radius}
+									radiusScale={radiusScale}
+									layers={layers}
+									points={points}
+									rng={rng}
+									onClick={() => {
+										setSeeds([
+											...seeds.slice(0, i),
+											{ seed, locked: !locked },
+											...seeds.slice(i + 1),
+										]);
+									}}
+								/>
+							</g>
+						);
+					})}
 				</svg>
 			</div>
 			<div className="printable right">
@@ -70,7 +107,7 @@ export function App() {
 								Math.trunc(i / columns) * spacing + padding
 							})`}
 						>
-							<circle cx="0" cy="0" r={radius} fill="none" stroke="red" strokeWidth={"0.1"} />
+							<circle cx="0" cy="0" r={radius} fill="none" stroke="red" strokeWidth="0.1" />
 							<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
 							<circle cx="0" cy="0" r={radius * 0.8 - 2} fill="white" stroke="none" />
 						</g>

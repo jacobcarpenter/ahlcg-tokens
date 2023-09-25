@@ -9,7 +9,11 @@ export function d(strings, ...values) {
 			let value = values[i];
 
 			if (Array.isArray(value)) {
-				value = value.join(",");
+				if (Array.isArray(value[0])) {
+					value = value.map((point) => point.join(",")).join(" ");
+				} else {
+					value = value.join(",");
+				}
 			}
 
 			return [...acc, value, str];
