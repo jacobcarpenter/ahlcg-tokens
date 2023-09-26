@@ -1,3 +1,5 @@
+import { CircleDetail } from "./CircleDetail";
+
 export function RandomStar({ radius, rng, layers, points, radiusScale, onClick }) {
 	const numLayers = rng.int(...layers);
 	const numPoints = rng.int(...points);
@@ -26,8 +28,14 @@ function Star({ radius, points, offsets, onClick }) {
 				strokeWidth="0.0762"
 				strokeMiterlimit="2.61313"
 			/>
-			<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
-			<circle cx="0" cy="0" r={radius * 0.8 - 1} fill="white" stroke="none" />
+			<CircleDetail
+				cx="0"
+				cy="0"
+				outerEdgeRadius={radius * 0.8}
+				fill="none"
+				stroke="black"
+				strokeWidth={1}
+			/>
 			{offsets.map(([offset, radiusScale], i) => (
 				<StarLayer
 					key={`${i};${offset}`}

@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { Random } from "random";
 import seedrandom from "seedrandom";
 import { RandomStar } from "./RandomStar";
+import { CircleDetail } from "./CircleDetail";
 import { Arrow } from "./Arrow";
 
 import "./App.css";
@@ -133,8 +134,14 @@ export function App() {
 								strokeWidth="0.0762"
 								strokeMiterlimit="2.61313"
 							/>
-							<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
-							<circle cx="0" cy="0" r={radius * 0.8 - 2} fill="white" stroke="none" />
+							<CircleDetail
+								cx="0"
+								cy="0"
+								outerEdgeRadius={radius * 0.8}
+								fill="none"
+								stroke="black"
+								strokeWidth={2}
+							/>
 						</g>
 					))}
 				</svg>
