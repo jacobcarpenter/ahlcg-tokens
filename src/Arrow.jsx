@@ -38,7 +38,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 			<path
 				fill="none"
 				stroke="red"
-				strokeWidth="0.1"
+				strokeWidth="0.0762"
+				strokeMiterlimit="2.61313"
 				d={d`
 					M${[xOffsetToTangent, -yOffsetToTangent]}
 					L${[firstOuterPointX, -firstOuterPointY]}
@@ -106,7 +107,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 					A${tokenPointRadius} ${tokenPointRadius} 0 0 1 ${[arrowBarInset, -arrowBarWidth / 2]}
 					Z`}
 					stroke="#000"
-					strokeWidth="0.1"
+					strokeWidth="0.0762"
+					strokeMiterlimit="2.61313"
 					fill="none"
 					clipPath={`url(#${id}-clip-left)`}
 				/>
@@ -122,7 +124,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
 						Z`}
 					stroke="#000"
-					strokeWidth="0.1"
+					strokeWidth="0.0762"
+					strokeMiterlimit="2.61313"
 					fill="#fff"
 					transform={`translate(${headOverlap}, 0)`}
 				/>
@@ -135,7 +138,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
 						Z`}
 					stroke="#000"
-					strokeWidth="0.1"
+					strokeWidth="0.0762"
+					strokeMiterlimit="2.61313"
 					fill="#fff"
 				/>
 			</g>
@@ -151,7 +155,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
 						Z`}
 						stroke="#000"
-						strokeWidth="0.1"
+						strokeWidth="0.0762"
+						strokeMiterlimit="2.61313"
 						fill="#fff"
 						transform={`translate(${headOverlap}, 0)`}
 					/>
@@ -164,7 +169,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 						Q${[arrowHeadX * 0.6, arrowHeadY * 0.2]} ${[0, 0]}
 						Z`}
 						stroke="#000"
-						strokeWidth="0.1"
+						strokeWidth="0.0762"
+						strokeMiterlimit="2.61313"
 						fill="#fff"
 					/>
 				</g>

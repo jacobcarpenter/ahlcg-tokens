@@ -57,7 +57,24 @@ export function App() {
 				<button onClick={handleRegen}>regenerate</button>
 			</div>
 			<div className="printable">
-				<svg ref={frontRef} style={{ width: "200mm" }} viewBox="0 0 200 200">
+				<svg
+					ref={frontRef}
+					xmlns="http://www.w3.org/2000/svg"
+					xmlSpace="preserve"
+					width="200mm"
+					height="200mm"
+					version="1.1"
+					shapeRendering="geometricPrecision"
+					textRendering="geometricPrecision"
+					imageRendering="optimizeQuality"
+					fillRule="evenodd"
+					clipRule="evenodd"
+					viewBox="0 0 200 200"
+					xmlnsXlink="http://www.w3.org/1999/xlink"
+					{...{
+						"xmlns:xodm": "http://www.corel.com/coreldraw/odm/2003",
+					}}
+				>
 					<g transform={`translate(130, ${padding / 2})`}>
 						{Array.from({ length: 6 }).map((_, i) => (
 							<g key={i} transform={`translate(0, ${padding * i})`}>
@@ -107,7 +124,16 @@ export function App() {
 								Math.trunc(i / columns) * spacing + padding
 							})`}
 						>
-							<circle cx="0" cy="0" r={radius} fill="none" stroke="red" strokeWidth="0.1" />
+							<circle
+								cx="0"
+								cy="0"
+								r={radius}
+								fill="none"
+								stroke="red"
+								strokeWidth="0.0762"
+								strokeMiterlimit="2.61313"
+								strokeMiterlimit="2.61313"
+							/>
 							<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
 							<circle cx="0" cy="0" r={radius * 0.8 - 2} fill="white" stroke="none" />
 						</g>

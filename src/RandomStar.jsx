@@ -17,7 +17,15 @@ function Star({ radius, points, offsets, onClick }) {
 
 	return (
 		<g onClick={onClick}>
-			<circle cx="0" cy="0" r={radius} fill="none" stroke="red" strokeWidth="0.1" />
+			<circle
+				cx="0"
+				cy="0"
+				r={radius}
+				fill="none"
+				stroke="red"
+				strokeWidth="0.0762"
+				strokeMiterlimit="2.61313"
+			/>
 			<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
 			<circle cx="0" cy="0" r={radius * 0.8 - 1} fill="white" stroke="none" />
 			{offsets.map(([offset, radiusScale], i) => (
@@ -41,7 +49,18 @@ function StarLayer({ points, offset, radius }) {
 					const angle = (i * Math.PI * 2) / arr.length;
 					const x1 = radius * Math.cos(angle);
 					const y1 = radius * Math.sin(angle);
-					return <line key={i} x1={x1} y1={y1} x2={0} y2={0} stroke="#000" strokeWidth="0.1" />;
+					return (
+						<line
+							key={i}
+							x1={x1}
+							y1={y1}
+							x2={0}
+							y2={0}
+							stroke="#000"
+							strokeWidth="0.0762"
+							strokeMiterlimit="2.61313"
+						/>
+					);
 				})}
 			</g>
 		);
@@ -65,7 +84,18 @@ function StarLayer({ points, offset, radius }) {
 
 				//console.log({ x1, y1, x2, y2 });
 
-				return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#000" strokeWidth="0.1" />;
+				return (
+					<line
+						key={i}
+						x1={x1}
+						y1={y1}
+						x2={x2}
+						y2={y2}
+						stroke="#000"
+						strokeWidth="0.0762"
+						strokeMiterlimit="2.61313"
+					/>
+				);
 			})}
 		</g>
 	);
