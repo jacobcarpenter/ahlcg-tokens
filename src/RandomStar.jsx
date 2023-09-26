@@ -20,8 +20,8 @@ function Star({ radius, points, offsets, onClick }) {
 	return (
 		<g onClick={onClick}>
 			<circle
-				cx="0"
-				cy="0"
+				cx={radius}
+				cy={radius}
 				r={radius}
 				fill="none"
 				stroke="red"
@@ -29,21 +29,23 @@ function Star({ radius, points, offsets, onClick }) {
 				strokeMiterlimit="2.61313"
 			/>
 			<CircleDetail
-				cx="0"
-				cy="0"
+				cx={radius}
+				cy={radius}
 				outerEdgeRadius={radius * 0.8}
 				fill="none"
 				stroke="black"
 				strokeWidth={1}
 			/>
-			{offsets.map(([offset, radiusScale], i) => (
-				<StarLayer
-					key={`${i};${offset}`}
-					points={points}
-					offset={offset}
-					radius={innerRadius * radiusScale}
-				/>
-			))}
+			<g transform={`translate(${radius}, ${radius})`}>
+				{offsets.map(([offset, radiusScale], i) => (
+					<StarLayer
+						key={`${i};${offset}`}
+						points={points}
+						offset={offset}
+						radius={innerRadius * radiusScale}
+					/>
+				))}
+			</g>
 		</g>
 	);
 }

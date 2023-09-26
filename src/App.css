@@ -19,6 +19,10 @@
 	gap: 8px;
 }
 
+.space-after {
+	margin-bottom: 8px;
+}
+
 .printable {
 	display: flex;
 	page-break-before: always;
