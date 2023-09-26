@@ -132,7 +132,6 @@ export function App() {
 								stroke="red"
 								strokeWidth="0.0762"
 								strokeMiterlimit="2.61313"
-								strokeMiterlimit="2.61313"
 							/>
 							<circle cx="0" cy="0" r={radius * 0.8} fill="black" stroke="none" />
 							<circle cx="0" cy="0" r={radius * 0.8 - 2} fill="white" stroke="none" />
