@@ -114,6 +114,22 @@ export function App() {
 							</g>
 						);
 					})}
+
+					<g transform={`translate(0, ${110 + padding / 2})`}>
+						{Array.from({ length: 4 }).map((_, i) => (
+							<g key={i} transform={`translate(${43 * i}, 0)`}>
+								<Arrow />
+							</g>
+						))}
+					</g>
+
+					<g transform={`translate(0, ${110 + padding + padding / 2})`}>
+						{Array.from({ length: 4 }).map((_, i) => (
+							<g key={i} transform={`translate(${43 * i}, 0)`}>
+								<Arrow />
+							</g>
+						))}
+					</g>
 				</svg>
 			</div>
 			<div className="printable right">
