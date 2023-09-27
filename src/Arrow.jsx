@@ -2,7 +2,7 @@ import { useId } from "react";
 
 import { d } from "./util";
 
-export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
+export function Arrow({ length = 42, width = 10, doubleArrow = true, cutStrokeColor = "red" }) {
 	const id = useId();
 
 	const tokenPointAngle = 28;
@@ -37,7 +37,7 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 		<g transform={`translate(0,${width / 2})`}>
 			<path
 				fill="none"
-				stroke="red"
+				stroke={cutStrokeColor}
 				strokeWidth="0.0762"
 				strokeMiterlimit="2.61313"
 				d={d`
