@@ -13,8 +13,8 @@ export function Arrow({ length = 42, width = 10, doubleArrow = true }) {
 	const headBackAngle = 44;
 	const headLength = 7;
 	const headOverlap = 3;
-	const arrowBarWidth = 4;
-	const arrowBarCurveFactorY = 0.5;
+	const arrowBarWidth = 3;
+	const arrowBarCurveFactorY = 0.475;
 	const arrowBarCurveFactorX = 0.25;
 
 	const arrowHeadY = Math.sin((headAngle * Math.PI) / 180) * headLength;

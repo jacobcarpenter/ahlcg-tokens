@@ -28,6 +28,8 @@ const arrowTokenVerticalSizePlusSpacing = 13;
 const arrowTokenHorizontalSizePlusSpacing = 43;
 
 export function App() {
+	const invisibleDownloadLink = useRef();
+
 	const [obverse, toggleObverse] = useReducer((state) => !state, false);
 	const [seeds, setSeeds] = useState(() =>
 		Array.from({ length: tokenCount }, () => ({
@@ -38,7 +40,12 @@ export function App() {
 
 	const frontRef = useRef();
 	function handleSave() {
-		navigator.clipboard.writeText(frontRef.current?.outerHTML);
+		const link = invisibleDownloadLink.current;
+		URL.revokeObjectURL(link.href);
+		link.href = URL.createObjectURL(
+			new Blob([frontRef.current?.outerHTML], { type: "image/svg+xml" })
+		);
+		link.click();
 	}
 
 	function handleRegen() {
@@ -57,6 +64,11 @@ export function App() {
 				<label>
 					<input type="checkbox" onClick={toggleObverse} /> obverse
 				</label>
+				<a
+					ref={invisibleDownloadLink}
+					className="invisible-download-link"
+					download={!obverse ? "front.svg" : "back.svg"}
+				/>
 			</div>
 			<div className="printable">
 				<svg
