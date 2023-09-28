@@ -67,7 +67,7 @@ function StarLayer({ points, offset, radius }) {
 							x2={0}
 							y2={0}
 							stroke="#000"
-							strokeWidth="0.0762"
+							strokeWidth="0.2646"
 							strokeMiterlimit="2.61313"
 						/>
 					);
@@ -102,7 +102,7 @@ function StarLayer({ points, offset, radius }) {
 						x2={x2}
 						y2={y2}
 						stroke="#000"
-						strokeWidth="0.0762"
+						strokeWidth="0.2646"
 						strokeMiterlimit="2.61313"
 					/>
 				);

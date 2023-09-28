@@ -92,14 +92,14 @@ export function App() {
 					<g transform={`translate(${columns * circleTokenSizePlusSpacing}, 0)`}>
 						{Array.from({ length: 10 }).map((_, i) => (
 							<g key={i} transform={`translate(0, ${arrowTokenVerticalSizePlusSpacing * i})`}>
-								<Arrow doubleArrow={obverse} cutStrokeColor={obverse ? "red" : "green"} />
+								<Arrow doubleArrow={obverse} cutStrokeColor={obverse ? "red" : "white"} />
 							</g>
 						))}
 
 						<g transform={`translate(${arrowTokenHorizontalSizePlusSpacing}, 0)`}>
 							{Array.from({ length: 10 }).map((_, i) => (
 								<g key={i} transform={`translate(0, ${arrowTokenVerticalSizePlusSpacing * i})`}>
-									<Arrow doubleArrow={obverse} cutStrokeColor={obverse ? "red" : "green"} />
+									<Arrow doubleArrow={obverse} cutStrokeColor={obverse ? "red" : "white"} />
 								</g>
 							))}
 						</g>
@@ -124,7 +124,7 @@ export function App() {
 												y1={radius}
 												x2={radius * 2}
 												y2={radius}
-												stroke={obverse ? "red" : "yellow"}
+												stroke="red"
 											/>
 										) : null}
 										<RandomStar
@@ -149,7 +149,7 @@ export function App() {
 											cy={radius}
 											r={radius}
 											fill="none"
-											stroke={obverse ? "red" : "green"}
+											stroke={obverse ? "red" : "white"}
 											strokeWidth="0.0762"
 											strokeMiterlimit="2.61313"
 										/>
